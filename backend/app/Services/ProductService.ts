@@ -1,7 +1,5 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import Product from 'App/Models/Product'
-import { schema, rules } from '@ioc:Adonis/Core/Validator'
-import validator from 'validator'
 
 export interface ProductData {
   nome: string
@@ -30,20 +28,7 @@ export default class ProductService {
     return await Product.find(id)
   }
 
-  public static async createProduct({ request }: HttpContextContract) {
-    // Define the validation schema
-    const productSchema = schema.create({
-      nome: schema.string(),
-      preco: schema.number([rules.required(), rules.greaterThan(0)]),
-      qtd: schema.number([rules.required(), rules.greaterThan(0)]),
-    })
-
-    // Validate the product data
-    const productData = await request.validate({
-      schema: productSchema,
-    })
-
-    // Create the product
+  public static async createProduct(productData: ProductData) {
     return await Product.create(productData)
   }
 

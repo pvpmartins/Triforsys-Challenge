@@ -17,8 +17,8 @@ export default class ProductsController {
 
     const productSchema = schema.create({
       nome: schema.string({}, [rules.required(), rules.maxLength(255)]),
-      preco: schema.number([rules.required(), rules.range(0, Infinity)]),
-      qtd: schema.number([rules.required(), rules.range(1, Infinity)]),
+      // preco: schema.number([rules.required(), rules.range(0, Infinity)]),
+      // qtd: schema.number([rules.required(), rules.range(1, Infinity)]),
     })
 
     try {

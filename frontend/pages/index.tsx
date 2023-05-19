@@ -257,7 +257,7 @@ export const getServerSideProps = async (context: {
   const limit = context.query.limit || 10;
 
   const res = await fetch(
-    `http://backend:3333/api/products?page=${page}&limit=${limit}`
+    `http://127.0.0.1:3333/api/products?page=${page}&limit=${limit}`
   );
   const data = await res.json();
   const { data: products } = data;

@@ -1,6 +1,7 @@
 import { createProduct } from "@/api";
 import { Error, ValidationFail } from "@/types";
 import { AxiosError } from "axios";
+import Router, { useRouter } from "next/router";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
@@ -154,7 +155,7 @@ const CreateProductModal = ({
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState(0);
   const [productQuantity, setProductQuantity] = useState(0);
-
+  const router = useRouter();
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [errorMessages, setErrorMessages] = useState<ErrorField[]>([]);
 
@@ -166,6 +167,7 @@ const CreateProductModal = ({
       setProductPrice(0);
       setProductQuantity(0);
       setCreateModalIsOpen(false);
+      router.reload();
     } catch (error: any) {
       const errorsValidation = error.response?.data?.message?.errors;
       if (errorsValidation) {
