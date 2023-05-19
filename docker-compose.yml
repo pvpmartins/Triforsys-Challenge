@@ -1,0 +1,51 @@
+version: '3'
+services:
+  backend:
+    
+    build: ./backend
+    ports:
+      - "3333:3333"
+    depends_on:
+      - db
+    environment:
+      DB_CONNECTION: pg
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_DATABASE: adonis
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - mynetwork
+  frontend:
+    
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - mynetwork
+  db:
+    
+    image: postgres:12
+    expose: 
+      - "5432"
+    ports: 
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: adonis
+    networks:
+      - mynetwork
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+volumes:
+  postgres_data:
+networks:
+  mynetwork:
