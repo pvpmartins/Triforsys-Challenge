@@ -1,12 +1,13 @@
 version: '3'
 services:
-  backend:
-    
+  
+  backend: 
     build: ./backend
     ports:
       - "3333:3333"
     depends_on:
       - db
+    command: sh -c 'yarn start && until nc -z localhost 3333; do sleep 1; done; node ace db:seed'
     environment:
       DB_CONNECTION: pg
       DB_HOST: db
