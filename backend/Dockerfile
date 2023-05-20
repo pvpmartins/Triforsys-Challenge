@@ -8,6 +8,7 @@ ENV nodeuser=node
 WORKDIR /usr/src/app
 
 COPY package*.json yarn.lock ./
+COPY ace /usr/src/app/ace
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
@@ -20,6 +21,7 @@ RUN chmod -R 754 /usr/src/app/
 
 RUN yarn install
 
+RUN node ace db:seed
 
 COPY . .
 
